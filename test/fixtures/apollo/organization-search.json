@@ -1,0 +1,34 @@
+{
+  "_source": "docs-sample",
+  "total_entries": 2,
+  "organizations": [
+    {
+      "id": "0000000000000000000000a1",
+      "name": "Northwind Labs",
+      "primary_domain": "northwind.example",
+      "website_url": "https://www.northwind.example",
+      "industry": "Software",
+      "estimated_num_employees": 120,
+      "founded_year": 2015,
+      "organization_city": "San Francisco",
+      "organization_state": "California",
+      "organization_country": "United States",
+      "technology_names": ["React", "Node.js", "AWS"],
+      "linkedin_url": "https://www.linkedin.com/company/northwind-labs",
+      "latest_funding_stage": "Series A",
+      "total_funding": 12000000
+    },
+    {
+      "id": "0000000000000000000000a2",
+      "name": "Ledgerly",
+      "primary_domain": "ledgerly.example",
+      "industry": "Financial Services",
+      "estimated_num_employees": 320,
+      "founded_year": 2012,
+      "organization_city": "New York",
+      "organization_state": "New York",
+      "organization_country": "United States",
+      "technology_names": ["Salesforce", "PostgreSQL"]
+    }
+  ]
+}

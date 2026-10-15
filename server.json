@@ -1,0 +1,88 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.arif-js/opensdr-mcp",
+  "title": "OpenSDR",
+  "description": "Open-source AI SDR: B2B prospecting, email enrichment, buying signals and safe outreach staging.",
+  "repository": {
+    "url": "https://github.com/arif-js/opensdr-mcp",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "opensdr-mcp",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "APOLLO_API_KEY",
+          "description": "Apollo API key for people/company search and enrichment (optional)",
+          "isRequired": false,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "HUNTER_API_KEY",
+          "description": "Hunter API key for email finding and verification (optional)",
+          "isRequired": false,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "EXA_API_KEY",
+          "description": "Exa API key for buying signals and account research (optional)",
+          "isRequired": false,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "TAVILY_API_KEY",
+          "description": "Tavily API key, an alternative to Exa for signals and research (optional)",
+          "isRequired": false,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "INSTANTLY_API_KEY",
+          "description": "Instantly API v2 key for draft campaigns and lead enrollment (optional)",
+          "isRequired": false,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "HUBSPOT_ACCESS_TOKEN",
+          "description": "HubSpot private-app token for contact sync (optional)",
+          "isRequired": false,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "OPENSDR_READ_ONLY",
+          "description": "Set to 1 to disable every tool that writes to an external service",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string",
+          "default": "0"
+        },
+        {
+          "name": "OPENSDR_MAX_CREDITS_PER_CALL",
+          "description": "Hard cap on estimated paid provider credits per tool call",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "number",
+          "default": "25"
+        },
+        {
+          "name": "OPENSDR_DATA_DIR",
+          "description": "Local data directory for lists, cache and suppression list (default ~/.opensdr)",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}

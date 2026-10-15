@@ -1,0 +1,15 @@
+{
+  "_source": "docs-sample",
+  "requestId": "req_demo_1",
+  "results": [
+    {
+      "title": "Northwind Labs raises a $25M Series B",
+      "url": "https://news.example/northwind/series-b",
+      "publishedDate": "2026-05-01T00:00:00.000Z",
+      "author": "Staff",
+      "text": "Northwind Labs <b>raised</b> a $25M Series B led by Example Ventures.",
+      "highlights": ["raised a $25M Series B"]
+    }
+  ],
+  "costDollars": { "total": 0.007, "search": { "neural": 0.005 } }
+}

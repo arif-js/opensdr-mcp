@@ -1,0 +1,42 @@
+name: Provider request
+description: Ask for a new data source, sequencer or CRM
+labels: [provider]
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: Provider
+      placeholder: e.g. Smartlead, Lemlist, Salesforce, Clearbit
+    validations:
+      required: true
+  - type: dropdown
+    id: capability
+    attributes:
+      label: What should it do?
+      multiple: true
+      options:
+        - People or company search
+        - Person or company enrichment
+        - Email finding or verification
+        - Buying signals / web research
+        - Campaign / sequencer
+        - CRM sync
+    validations:
+      required: true
+  - type: input
+    id: docs
+    attributes:
+      label: Link to the provider's official API docs
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why do you need it?
+      description: Your use case, and whether the provider has a free tier or trial for testing.
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contributing
+      options:
+        - label: I'd like to implement this myself (see CONTRIBUTING.md → Adding a provider)

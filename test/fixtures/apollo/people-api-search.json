@@ -1,0 +1,27 @@
+{
+  "_source": "docs-sample",
+  "total_entries": 31993,
+  "people": [
+    {
+      "id": "000000000000000000000001",
+      "first_name": "Elena",
+      "last_name_obfuscated": "Mo***s",
+      "title": "Director of Sales",
+      "last_refreshed_at": "2026-05-16T08:16:08.485+00:00",
+      "has_email": false,
+      "has_direct_phone": "Yes",
+      "organization": { "name": "Northwind Systems" }
+    },
+    {
+      "id": "000000000000000000000002",
+      "first_name": "Marcus",
+      "last_name_obfuscated": "Le***n",
+      "title": "Sales Director",
+      "last_refreshed_at": "2026-05-10T08:39:18.742+00:00",
+      "has_email": true,
+      "email": "marcus@bluepeak.example",
+      "phone": "+1-555-0100",
+      "organization": { "name": "Blue Peak Analytics" }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+name: Release
+
+# Publishes to npm and then to the official MCP Registry when a version tag such
+# as v1.0.0 is pushed. No secrets: npm uses Trusted Publishing (GitHub OIDC),
+# which also attaches provenance automatically, and the MCP Registry uses
+# GitHub OIDC too. Configure the trusted publisher on npmjs.com:
+#   package opensdr-mcp → Settings → Trusted Publisher → GitHub Actions
+#   owner: arif-js · repository: opensdr-mcp · workflow: release.yml
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # npm Trusted Publishing + MCP Registry GitHub OIDC login
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm >= 11.5.1.
+      - run: npm install -g npm@^11.5.1 && npm --version
+
+      - name: Check tag matches package.json and server.json
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG=$(node -p "require('./package.json').version")
+          SRV=$(node -p "require('./server.json').version")
+          SRV_PKG=$(node -p "require('./server.json').packages[0].version")
+          echo "tag=$TAG package=$PKG server=$SRV server.package=$SRV_PKG"
+          if [ "$TAG" != "$PKG" ] || [ "$TAG" != "$SRV" ] || [ "$TAG" != "$SRV_PKG" ]; then
+            echo "::error::Tag v$TAG must match package.json and server.json versions."
+            exit 1
+          fi
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm run check:pack
+
+      # Skips when this exact version is already on npm (for example, the very
+      # first release published by hand before the trusted publisher existed).
+      - name: Publish to npm (Trusted Publishing)
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
+            echo "$NAME@$VERSION is already on npm; skipping npm publish."
+          else
+            npm publish --access public
+          fi
+
+      - name: Install mcp-publisher (pinned)
+        run: |
+          curl -sL "https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+
+      - name: Publish to the MCP Registry
+        run: |
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish

@@ -1,0 +1,19 @@
+{
+  "_source": "docs-sample",
+  "data": {
+    "status": "valid",
+    "score": 100,
+    "email": "patrick@stripe.example",
+    "regexp": true,
+    "gibberish": false,
+    "disposable": false,
+    "webmail": false,
+    "mx_records": true,
+    "smtp_server": true,
+    "smtp_check": true,
+    "accept_all": false,
+    "block": false,
+    "sources": []
+  },
+  "meta": { "params": { "email": "patrick@stripe.example" } }
+}

@@ -1,0 +1,18 @@
+{
+  "_source": "docs-sample",
+  "person": {
+    "id": "0000000000000000000000b1",
+    "first_name": "Jordan",
+    "last_name": "Blake",
+    "name": "Jordan Blake",
+    "email": "jordan.blake@northwind.example",
+    "email_status": "verified",
+    "title": "VP Engineering",
+    "linkedin_url": "https://www.linkedin.com/in/jordan-blake",
+    "city": "San Francisco",
+    "state": "California",
+    "country": "United States",
+    "organization": { "name": "Northwind Labs", "primary_domain": "northwind.example" }
+  },
+  "match_confidence": "high"
+}

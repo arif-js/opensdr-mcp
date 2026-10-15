@@ -1,0 +1,19 @@
+{
+  "_source": "docs-sample",
+  "organization": {
+    "id": "0000000000000000000000c1",
+    "name": "Northwind Labs",
+    "primary_domain": "northwind.example",
+    "website_url": "https://www.northwind.example",
+    "industry": "Software",
+    "estimated_num_employees": 120,
+    "founded_year": 2015,
+    "organization_city": "San Francisco",
+    "organization_state": "California",
+    "organization_country": "United States",
+    "technology_names": ["React", "Node.js", "AWS"],
+    "linkedin_url": "https://www.linkedin.com/company/northwind-labs",
+    "latest_funding_stage": "Series A",
+    "total_funding": 12000000
+  }
+}

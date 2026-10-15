@@ -1,0 +1,84 @@
+{
+  "name": "opensdr-mcp",
+  "version": "1.0.0",
+  "mcpName": "io.github.arif-js/opensdr-mcp",
+  "description": "Open-source, local-first MCP server that turns Claude into an AI SDR: prospecting, waterfall email enrichment, buying signals and outbound orchestration on your own API keys.",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Arif",
+    "url": "https://github.com/arif-js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arif-js/opensdr-mcp.git"
+  },
+  "homepage": "https://github.com/arif-js/opensdr-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/arif-js/opensdr-mcp/issues"
+  },
+  "bin": {
+    "opensdr-mcp": "dist/cli.js"
+  },
+  "main": "dist/cli.js",
+  "files": [
+    "dist/cli.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "ai-sdr",
+    "sdr",
+    "sales-development",
+    "ai-agent",
+    "claude",
+    "sales-automation",
+    "sales-prospecting",
+    "prospecting",
+    "lead-generation",
+    "email-finder",
+    "email-verification",
+    "cold-email",
+    "outbound",
+    "b2b",
+    "apollo",
+    "hunter",
+    "exa",
+    "tavily",
+    "instantly",
+    "hubspot"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/cli.js",
+    "check:pack": "node scripts/check-pack.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "zod": "4.6.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/node": "24.7.0",
+    "@vitest/coverage-v8": "5.0.4",
+    "tsup": "8.5.1",
+    "typescript": "7.0.2",
+    "undici": "6.29.0",
+    "vitest": "5.0.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

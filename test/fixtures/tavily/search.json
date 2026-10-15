@@ -1,0 +1,12 @@
+{
+  "_source": "docs-sample",
+  "results": [
+    {
+      "title": "Northwind Labs launches a new platform",
+      "url": "https://news.example/northwind/launch?utm_source=newsletter",
+      "content": "Northwind Labs launched a new platform for revenue teams.",
+      "score": 0.93,
+      "published_date": "2026-05-02"
+    }
+  ]
+}

@@ -1,0 +1,584 @@
+{
+  "seniority": [
+    { "value": "owner", "label": "Owner" },
+    { "value": "founder", "label": "Founder" },
+    { "value": "c_suite", "label": "C-Suite" },
+    { "value": "partner", "label": "Partner" },
+    { "value": "vp", "label": "VP" },
+    { "value": "head", "label": "Head" },
+    { "value": "director", "label": "Director" },
+    { "value": "manager", "label": "Manager" },
+    { "value": "senior", "label": "Senior" },
+    { "value": "entry", "label": "Entry" },
+    { "value": "intern", "label": "Intern" }
+  ],
+  "employee_range": [
+    { "value": "1,10", "label": "1-10" },
+    { "value": "11,50", "label": "11-50" },
+    { "value": "51,200", "label": "51-200" },
+    { "value": "201,500", "label": "201-500" },
+    { "value": "501,1000", "label": "501-1,000" },
+    { "value": "1001,5000", "label": "1,001-5,000" },
+    { "value": "5001,10000", "label": "5,001-10,000" },
+    { "value": "10001,20000", "label": "10,001-20,000" },
+    { "value": "20001,50000", "label": "20,001-50,000" },
+    { "value": "50001,100000", "label": "50,001-100,000" },
+    { "value": "100001,200000", "label": "100,001-200,000" },
+    { "value": "200001,500000", "label": "200,001-500,000" },
+    { "value": "500001,1000000", "label": "500,001-1,000,000" },
+    { "value": "1000001,5000000", "label": "1,000,001-5,000,000" }
+  ],
+  "revenue_range": [
+    { "value": "under-1m", "label": "Under $1M", "min": 0, "max": 1000000 },
+    { "value": "1m-10m", "label": "$1M-$10M", "min": 1000000, "max": 10000000 },
+    { "value": "10m-50m", "label": "$10M-$50M", "min": 10000000, "max": 50000000 },
+    { "value": "50m-100m", "label": "$50M-$100M", "min": 50000000, "max": 100000000 },
+    { "value": "100m-500m", "label": "$100M-$500M", "min": 100000000, "max": 500000000 },
+    { "value": "500m-1b", "label": "$500M-$1B", "min": 500000000, "max": 1000000000 },
+    { "value": "over-1b", "label": "Over $1B", "min": 1000000000 }
+  ],
+  "department": [
+    {
+      "value": "engineering",
+      "label": "Engineering",
+      "aliases": ["engineering", "r&d", "product engineering"]
+    },
+    { "value": "product", "label": "Product", "aliases": ["product", "product management"] },
+    { "value": "design", "label": "Design", "aliases": ["design", "ux", "product design"] },
+    { "value": "sales", "label": "Sales", "aliases": ["sales", "account executive"] },
+    {
+      "value": "marketing",
+      "label": "Marketing",
+      "aliases": ["marketing", "growth", "demand generation"]
+    },
+    {
+      "value": "customer success",
+      "label": "Customer Success",
+      "aliases": ["customer success", "cs", "support"]
+    },
+    { "value": "operations", "label": "Operations", "aliases": ["operations", "ops", "bizops"] },
+    { "value": "finance", "label": "Finance", "aliases": ["finance", "accounting"] },
+    {
+      "value": "human resources",
+      "label": "Human Resources",
+      "aliases": ["human resources", "hr", "people", "talent"]
+    },
+    { "value": "legal", "label": "Legal", "aliases": ["legal", "compliance"] },
+    {
+      "value": "information technology",
+      "label": "Information Technology",
+      "aliases": ["information technology", "it"]
+    },
+    { "value": "data", "label": "Data", "aliases": ["data", "analytics", "data science"] },
+    { "value": "security", "label": "Security", "aliases": ["security", "infosec", "ciso"] },
+    {
+      "value": "partnerships",
+      "label": "Partnerships",
+      "aliases": ["partnerships", "business development", "bizdev"]
+    },
+    {
+      "value": "consulting",
+      "label": "Consulting",
+      "aliases": ["consulting", "professional services"]
+    },
+    { "value": "supply chain", "label": "Supply Chain", "aliases": ["supply chain", "logistics"] }
+  ],
+  "industry": [
+    {
+      "value": "software",
+      "label": "Software",
+      "aliases": ["saas", "b2b software", "enterprise software"]
+    },
+    {
+      "value": "information technology",
+      "label": "Information Technology",
+      "aliases": ["it services", "tech"]
+    },
+    {
+      "value": "financial services",
+      "label": "Financial Services",
+      "aliases": ["fintech", "banking", "payments"]
+    },
+    { "value": "insurance", "label": "Insurance", "aliases": ["insurtech"] },
+    {
+      "value": "healthcare",
+      "label": "Healthcare",
+      "aliases": ["healthtech", "medical", "health"]
+    },
+    { "value": "biotechnology", "label": "Biotechnology", "aliases": ["biotech", "life sciences"] },
+    { "value": "pharmaceuticals", "label": "Pharmaceuticals", "aliases": ["pharma"] },
+    {
+      "value": "e-commerce",
+      "label": "E-commerce",
+      "aliases": ["ecommerce", "retail tech", "d2c"]
+    },
+    { "value": "retail", "label": "Retail", "aliases": ["retail", "consumer goods"] },
+    {
+      "value": "manufacturing",
+      "label": "Manufacturing",
+      "aliases": ["industrial", "manufacturing"]
+    },
+    {
+      "value": "logistics",
+      "label": "Logistics",
+      "aliases": ["supply chain", "transportation", "freight"]
+    },
+    { "value": "education", "label": "Education", "aliases": ["edtech", "higher education"] },
+    { "value": "real estate", "label": "Real Estate", "aliases": ["proptech", "real estate"] },
+    {
+      "value": "marketing and advertising",
+      "label": "Marketing & Advertising",
+      "aliases": ["adtech", "martech", "agencies"]
+    },
+    {
+      "value": "media and entertainment",
+      "label": "Media & Entertainment",
+      "aliases": ["media", "entertainment", "streaming"]
+    },
+    {
+      "value": "telecommunications",
+      "label": "Telecommunications",
+      "aliases": ["telecom", "networking"]
+    },
+    {
+      "value": "energy",
+      "label": "Energy",
+      "aliases": ["clean energy", "oil and gas", "utilities"]
+    },
+    { "value": "construction", "label": "Construction", "aliases": ["construction", "building"] },
+    {
+      "value": "hospitality",
+      "label": "Hospitality",
+      "aliases": ["travel", "hospitality", "food and beverage"]
+    },
+    { "value": "nonprofit", "label": "Nonprofit", "aliases": ["ngo", "non-profit"] },
+    { "value": "government", "label": "Government", "aliases": ["public sector", "govtech"] },
+    { "value": "legal services", "label": "Legal Services", "aliases": ["legaltech"] },
+    { "value": "cybersecurity", "label": "Cybersecurity", "aliases": ["security", "infosec"] },
+    {
+      "value": "artificial intelligence",
+      "label": "Artificial Intelligence",
+      "aliases": ["ai", "machine learning", "ml"]
+    }
+  ],
+  "title": [
+    { "value": "CEO", "label": "Chief Executive Officer", "aliases": ["chief executive officer"] },
+    {
+      "value": "CTO",
+      "label": "Chief Technology Officer",
+      "aliases": ["chief technology officer"]
+    },
+    { "value": "CFO", "label": "Chief Financial Officer", "aliases": ["chief financial officer"] },
+    { "value": "COO", "label": "Chief Operating Officer", "aliases": ["chief operating officer"] },
+    { "value": "CMO", "label": "Chief Marketing Officer", "aliases": ["chief marketing officer"] },
+    { "value": "CRO", "label": "Chief Revenue Officer", "aliases": ["chief revenue officer"] },
+    {
+      "value": "CIO",
+      "label": "Chief Information Officer",
+      "aliases": ["chief information officer"]
+    },
+    {
+      "value": "CISO",
+      "label": "Chief Information Security Officer",
+      "aliases": ["chief security officer"]
+    },
+    { "value": "CPO", "label": "Chief Product Officer", "aliases": ["chief product officer"] },
+    { "value": "Founder", "label": "Founder", "aliases": ["co-founder", "cofounder"] },
+    { "value": "Owner", "label": "Owner", "aliases": ["proprietor"] },
+    {
+      "value": "VP Engineering",
+      "label": "VP Engineering",
+      "aliases": ["vp eng", "vice president of engineering", "vice president engineering"]
+    },
+    {
+      "value": "VP of Engineering",
+      "label": "VP of Engineering",
+      "aliases": ["vp engineering", "vp eng"]
+    },
+    {
+      "value": "VP Sales",
+      "label": "VP Sales",
+      "aliases": ["vp of sales", "vice president sales"]
+    },
+    {
+      "value": "VP Marketing",
+      "label": "VP Marketing",
+      "aliases": ["vp of marketing", "vice president marketing"]
+    },
+    {
+      "value": "VP Product",
+      "label": "VP Product",
+      "aliases": ["vp of product", "vice president product"]
+    },
+    {
+      "value": "VP Operations",
+      "label": "VP Operations",
+      "aliases": ["vp of operations", "vice president operations"]
+    },
+    { "value": "VP Finance", "label": "VP Finance", "aliases": ["vp of finance"] },
+    {
+      "value": "VP Customer Success",
+      "label": "VP Customer Success",
+      "aliases": ["vp of customer success"]
+    },
+    {
+      "value": "VP Revenue Operations",
+      "label": "VP Revenue Operations",
+      "aliases": ["vp revops"]
+    },
+    {
+      "value": "Head of Engineering",
+      "label": "Head of Engineering",
+      "aliases": ["engineering lead", "head of eng"]
+    },
+    { "value": "Head of Growth", "label": "Head of Growth", "aliases": ["growth lead"] },
+    { "value": "Head of Sales", "label": "Head of Sales", "aliases": ["sales lead"] },
+    { "value": "Head of Marketing", "label": "Head of Marketing", "aliases": ["marketing lead"] },
+    { "value": "Head of Product", "label": "Head of Product", "aliases": ["product lead"] },
+    {
+      "value": "Head of Customer Success",
+      "label": "Head of Customer Success",
+      "aliases": ["customer success lead"]
+    },
+    {
+      "value": "Head of Revenue Operations",
+      "label": "Head of Revenue Operations",
+      "aliases": ["head of revops"]
+    },
+    { "value": "Head of Data", "label": "Head of Data", "aliases": ["data lead"] },
+    {
+      "value": "Head of People",
+      "label": "Head of People",
+      "aliases": ["head of hr", "people lead"]
+    },
+    {
+      "value": "Director of Engineering",
+      "label": "Director of Engineering",
+      "aliases": ["engineering director", "director engineering"]
+    },
+    { "value": "Director of Sales", "label": "Director of Sales", "aliases": ["sales director"] },
+    {
+      "value": "Director of Marketing",
+      "label": "Director of Marketing",
+      "aliases": ["marketing director"]
+    },
+    {
+      "value": "Director of Product",
+      "label": "Director of Product",
+      "aliases": ["product director"]
+    },
+    {
+      "value": "Director of Operations",
+      "label": "Director of Operations",
+      "aliases": ["operations director", "director ops"]
+    },
+    {
+      "value": "Director of Customer Success",
+      "label": "Director of Customer Success",
+      "aliases": ["customer success director"]
+    },
+    {
+      "value": "Director of Revenue Operations",
+      "label": "Director of Revenue Operations",
+      "aliases": ["revops director"]
+    },
+    { "value": "Director of Data", "label": "Director of Data", "aliases": ["data director"] },
+    {
+      "value": "Director of Finance",
+      "label": "Director of Finance",
+      "aliases": ["finance director"]
+    },
+    {
+      "value": "Engineering Manager",
+      "label": "Engineering Manager",
+      "aliases": ["em", "software engineering manager"]
+    },
+    { "value": "Product Manager", "label": "Product Manager", "aliases": ["pm"] },
+    {
+      "value": "Senior Product Manager",
+      "label": "Senior Product Manager",
+      "aliases": ["senior pm"]
+    },
+    {
+      "value": "Program Manager",
+      "label": "Program Manager",
+      "aliases": ["project manager", "tpm", "technical program manager"]
+    },
+    { "value": "Sales Manager", "label": "Sales Manager", "aliases": ["sales manager"] },
+    {
+      "value": "Account Executive",
+      "label": "Account Executive",
+      "aliases": ["ae", "account exec"]
+    },
+    {
+      "value": "Enterprise Account Executive",
+      "label": "Enterprise Account Executive",
+      "aliases": ["enterprise ae"]
+    },
+    {
+      "value": "Sales Development Representative",
+      "label": "Sales Development Representative",
+      "aliases": ["sdr", "sales development rep"]
+    },
+    {
+      "value": "Business Development Representative",
+      "label": "Business Development Representative",
+      "aliases": ["bdr"]
+    },
+    { "value": "Account Manager", "label": "Account Manager", "aliases": ["am"] },
+    {
+      "value": "Customer Success Manager",
+      "label": "Customer Success Manager",
+      "aliases": ["csm"]
+    },
+    {
+      "value": "Marketing Manager",
+      "label": "Marketing Manager",
+      "aliases": ["marketing manager"]
+    },
+    {
+      "value": "Growth Marketing Manager",
+      "label": "Growth Marketing Manager",
+      "aliases": ["growth marketer"]
+    },
+    {
+      "value": "Demand Generation Manager",
+      "label": "Demand Generation Manager",
+      "aliases": ["demand gen", "demand generation"]
+    },
+    {
+      "value": "Content Marketing Manager",
+      "label": "Content Marketing Manager",
+      "aliases": ["content marketer"]
+    },
+    {
+      "value": "Product Marketing Manager",
+      "label": "Product Marketing Manager",
+      "aliases": ["pmm"]
+    },
+    {
+      "value": "Revenue Operations Manager",
+      "label": "Revenue Operations Manager",
+      "aliases": ["revops manager", "sales ops manager"]
+    },
+    {
+      "value": "Marketing Operations Manager",
+      "label": "Marketing Operations Manager",
+      "aliases": ["marketing ops", "mops"]
+    },
+    {
+      "value": "Business Operations Manager",
+      "label": "Business Operations Manager",
+      "aliases": ["bizops", "business ops"]
+    },
+    { "value": "Chief of Staff", "label": "Chief of Staff", "aliases": ["cos"] },
+    { "value": "Data Scientist", "label": "Data Scientist", "aliases": ["data science"] },
+    { "value": "Data Engineer", "label": "Data Engineer", "aliases": ["analytics engineer"] },
+    {
+      "value": "Data Analyst",
+      "label": "Data Analyst",
+      "aliases": ["analyst", "business analyst"]
+    },
+    {
+      "value": "Machine Learning Engineer",
+      "label": "Machine Learning Engineer",
+      "aliases": ["ml engineer", "mle"]
+    },
+    {
+      "value": "AI Engineer",
+      "label": "AI Engineer",
+      "aliases": ["artificial intelligence engineer"]
+    },
+    {
+      "value": "Software Engineer",
+      "label": "Software Engineer",
+      "aliases": ["developer", "swe", "programmer"]
+    },
+    {
+      "value": "Senior Software Engineer",
+      "label": "Senior Software Engineer",
+      "aliases": ["senior swe", "senior developer"]
+    },
+    {
+      "value": "Staff Software Engineer",
+      "label": "Staff Software Engineer",
+      "aliases": ["staff engineer"]
+    },
+    {
+      "value": "Principal Engineer",
+      "label": "Principal Engineer",
+      "aliases": ["principal software engineer"]
+    },
+    {
+      "value": "Full Stack Engineer",
+      "label": "Full Stack Engineer",
+      "aliases": ["fullstack developer", "full-stack engineer"]
+    },
+    {
+      "value": "Frontend Engineer",
+      "label": "Frontend Engineer",
+      "aliases": ["front-end developer", "ui engineer"]
+    },
+    {
+      "value": "Backend Engineer",
+      "label": "Backend Engineer",
+      "aliases": ["back-end developer", "server engineer"]
+    },
+    {
+      "value": "DevOps Engineer",
+      "label": "DevOps Engineer",
+      "aliases": ["sre", "site reliability engineer", "platform engineer"]
+    },
+    {
+      "value": "Mobile Engineer",
+      "label": "Mobile Engineer",
+      "aliases": ["ios engineer", "android engineer"]
+    },
+    {
+      "value": "QA Engineer",
+      "label": "QA Engineer",
+      "aliases": ["quality assurance", "test engineer"]
+    },
+    {
+      "value": "Security Engineer",
+      "label": "Security Engineer",
+      "aliases": ["infosec engineer", "appsec"]
+    },
+    {
+      "value": "Product Designer",
+      "label": "Product Designer",
+      "aliases": ["ux designer", "ui designer"]
+    },
+    { "value": "UX Designer", "label": "UX Designer", "aliases": ["user experience designer"] },
+    { "value": "UX Researcher", "label": "UX Researcher", "aliases": ["user researcher"] },
+    {
+      "value": "Design Lead",
+      "label": "Design Lead",
+      "aliases": ["head of design", "design manager"]
+    },
+    { "value": "Finance Manager", "label": "Finance Manager", "aliases": ["financial manager"] },
+    { "value": "Financial Analyst", "label": "Financial Analyst", "aliases": ["fp&a analyst"] },
+    { "value": "Controller", "label": "Controller", "aliases": ["financial controller"] },
+    { "value": "Accountant", "label": "Accountant", "aliases": ["staff accountant"] },
+    {
+      "value": "Human Resources Manager",
+      "label": "Human Resources Manager",
+      "aliases": ["hr manager", "people manager"]
+    },
+    {
+      "value": "Recruiter",
+      "label": "Recruiter",
+      "aliases": ["talent acquisition", "technical recruiter"]
+    },
+    {
+      "value": "Talent Acquisition Manager",
+      "label": "Talent Acquisition Manager",
+      "aliases": ["recruiting manager"]
+    },
+    { "value": "Operations Manager", "label": "Operations Manager", "aliases": ["ops manager"] },
+    {
+      "value": "Customer Support Manager",
+      "label": "Customer Support Manager",
+      "aliases": ["support manager", "customer service manager"]
+    },
+    {
+      "value": "Partnerships Manager",
+      "label": "Partnerships Manager",
+      "aliases": ["business development manager", "bizdev manager"]
+    },
+    {
+      "value": "Solutions Engineer",
+      "label": "Solutions Engineer",
+      "aliases": ["sales engineer", "solutions architect"]
+    },
+    {
+      "value": "Solutions Architect",
+      "label": "Solutions Architect",
+      "aliases": ["technical solutions architect"]
+    },
+    {
+      "value": "Implementation Manager",
+      "label": "Implementation Manager",
+      "aliases": ["onboarding manager"]
+    },
+    {
+      "value": "Technical Support Engineer",
+      "label": "Technical Support Engineer",
+      "aliases": ["support engineer"]
+    },
+    { "value": "IT Manager", "label": "IT Manager", "aliases": ["information technology manager"] },
+    { "value": "IT Director", "label": "IT Director", "aliases": ["director of it"] },
+    {
+      "value": "Legal Counsel",
+      "label": "Legal Counsel",
+      "aliases": ["general counsel", "in-house counsel"]
+    },
+    { "value": "Compliance Manager", "label": "Compliance Manager", "aliases": ["risk manager"] },
+    { "value": "Product Owner", "label": "Product Owner", "aliases": ["po"] },
+    { "value": "Scrum Master", "label": "Scrum Master", "aliases": ["agile coach"] },
+    { "value": "Community Manager", "label": "Community Manager", "aliases": ["community lead"] },
+    {
+      "value": "Social Media Manager",
+      "label": "Social Media Manager",
+      "aliases": ["social media lead"]
+    },
+    { "value": "Brand Manager", "label": "Brand Manager", "aliases": ["brand lead"] },
+    { "value": "SEO Manager", "label": "SEO Manager", "aliases": ["search engine optimization"] },
+    {
+      "value": "Digital Marketing Manager",
+      "label": "Digital Marketing Manager",
+      "aliases": ["digital marketing"]
+    },
+    {
+      "value": "Event Marketing Manager",
+      "label": "Event Marketing Manager",
+      "aliases": ["field marketing manager"]
+    },
+    {
+      "value": "Revenue Operations Analyst",
+      "label": "Revenue Operations Analyst",
+      "aliases": ["revops analyst", "sales ops analyst"]
+    },
+    { "value": "Security Analyst", "label": "Security Analyst", "aliases": ["soc analyst"] },
+    {
+      "value": "Cloud Engineer",
+      "label": "Cloud Engineer",
+      "aliases": ["cloud architect", "aws engineer"]
+    },
+    { "value": "Database Administrator", "label": "Database Administrator", "aliases": ["dba"] },
+    {
+      "value": "Network Engineer",
+      "label": "Network Engineer",
+      "aliases": ["network administrator"]
+    },
+    { "value": "Systems Administrator", "label": "Systems Administrator", "aliases": ["sysadmin"] },
+    { "value": "Business Analyst", "label": "Business Analyst", "aliases": ["ba"] },
+    { "value": "Consultant", "label": "Consultant", "aliases": ["advisor"] },
+    {
+      "value": "Solutions Consultant",
+      "label": "Solutions Consultant",
+      "aliases": ["pre-sales consultant"]
+    },
+    { "value": "Producer", "label": "Producer", "aliases": ["content producer"] },
+    { "value": "Editor", "label": "Editor", "aliases": ["content editor"] },
+    { "value": "Copywriter", "label": "Copywriter", "aliases": ["content writer", "writer"] },
+    {
+      "value": "Technical Writer",
+      "label": "Technical Writer",
+      "aliases": ["documentation writer"]
+    },
+    { "value": "Chief Data Officer", "label": "Chief Data Officer", "aliases": ["cdo"] },
+    { "value": "Chief People Officer", "label": "Chief People Officer", "aliases": ["chro"] },
+    { "value": "Managing Director", "label": "Managing Director", "aliases": ["md"] },
+    { "value": "General Manager", "label": "General Manager", "aliases": ["gm"] },
+    {
+      "value": "Regional Sales Manager",
+      "label": "Regional Sales Manager",
+      "aliases": ["regional manager"]
+    },
+    { "value": "Head of Design", "label": "Head of Design", "aliases": ["design lead"] },
+    { "value": "Head of IT", "label": "Head of IT", "aliases": ["it lead"] },
+    { "value": "Head of Legal", "label": "Head of Legal", "aliases": ["legal lead"] },
+    { "value": "Head of Finance", "label": "Head of Finance", "aliases": ["finance lead"] }
+  ]
+}

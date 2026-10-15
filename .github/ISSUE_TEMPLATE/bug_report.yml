@@ -1,0 +1,49 @@
+name: Bug report
+description: Something in OpenSDR doesn't work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! **Never paste API keys or real prospect data** into this issue.
+        For security problems, use the private report link in SECURITY.md instead.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The prompt you gave, or the tool name and arguments (with any personal data removed).
+    validations:
+      required: true
+  - type: textarea
+    id: status
+    attributes:
+      label: Output of sdr_provider_status
+      description: Ask your assistant to run `sdr_provider_status` and paste the result. It never contains key values.
+      render: json
+  - type: input
+    id: client
+    attributes:
+      label: MCP client and version
+      placeholder: e.g. Claude Desktop 1.2.3, Claude Code 2.0, Cursor 1.5
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: OpenSDR version and Node.js version
+      placeholder: e.g. opensdr-mcp 1.0.0, Node 22.12.0
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs (optional)
+      description: Server logs go to stderr. Set OPENSDR_LOG_LEVEL=debug for more detail. Keys are redacted, but check before pasting.
+      render: text

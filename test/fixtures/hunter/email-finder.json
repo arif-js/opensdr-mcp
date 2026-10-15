@@ -1,0 +1,16 @@
+{
+  "_source": "docs-sample",
+  "data": {
+    "first_name": "Alexis",
+    "last_name": "Ohanian",
+    "email": "alexis@reddit.example",
+    "score": 97,
+    "domain": "reddit.example",
+    "accept_all": false,
+    "verification": { "date": "2021-06-14", "status": "valid" },
+    "sources": [{ "uri": "https://redditblog.example/post" }]
+  },
+  "meta": {
+    "params": { "first_name": "Alexis", "last_name": "Ohanian", "domain": "reddit.example" }
+  }
+}

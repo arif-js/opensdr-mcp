@@ -1,0 +1,93 @@
+{
+  "window_days": 90,
+  "types": {
+    "funding": {
+      "label": "Funding",
+      "query": "\"{company}\" raises OR \"series a\" OR \"series b\" OR seed round OR funding",
+      "keywords": [
+        "raises",
+        "raised",
+        "funding",
+        "series a",
+        "series b",
+        "series c",
+        "seed round",
+        "seed funding",
+        "venture round",
+        "investment",
+        "closed a round"
+      ]
+    },
+    "hiring": {
+      "label": "Hiring",
+      "query": "\"{company}\" hiring OR \"open roles\" OR \"job openings\"",
+      "keywords": [
+        "hiring",
+        "open roles",
+        "job openings",
+        "we're hiring",
+        "now hiring",
+        "jobs",
+        "careers",
+        "expanding team"
+      ]
+    },
+    "leadership_change": {
+      "label": "Leadership change",
+      "query": "\"{company}\" appoints OR \"names new\" OR CEO OR CTO",
+      "keywords": [
+        "appoints",
+        "appointed",
+        "names new",
+        "names as",
+        "joins as",
+        "new ceo",
+        "new cto",
+        "new cfo",
+        "new coo",
+        "chief executive",
+        "chief technology"
+      ]
+    },
+    "product_launch": {
+      "label": "Product launch",
+      "query": "\"{company}\" launches OR announces OR \"generally available\"",
+      "keywords": [
+        "launches",
+        "launched",
+        "announces",
+        "announced",
+        "now available",
+        "generally available",
+        "new product",
+        "new platform",
+        "unveils",
+        "releases"
+      ]
+    },
+    "acquisition": {
+      "label": "Acquisition",
+      "query": "\"{company}\" acquires OR acquisition OR merger",
+      "keywords": ["acquires", "acquired", "acquisition", "merger", "merges", "buyout", "buys"]
+    },
+    "tech_change": {
+      "label": "Tech change",
+      "query": "\"{company}\" migrates OR adopts OR \"switches to\"",
+      "keywords": [
+        "migrates",
+        "migrated",
+        "adopts",
+        "adopted",
+        "switches to",
+        "implements",
+        "rolls out",
+        "deploys"
+      ]
+    },
+    "other": {
+      "label": "News",
+      "query": "\"{company}\" news",
+      "keywords": ["announces", "announced", "launches", "raises", "report", "update"]
+    }
+  }
+}
