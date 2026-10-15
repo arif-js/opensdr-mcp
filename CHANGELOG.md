@@ -5,7 +5,7 @@ All notable changes to this project are documented here. The format is based on 
 ## [Unreleased]
 
 ### Added
-- MCPB bundle (`opensdr-mcp.mcpb`): a self-contained build for one-click install in Claude Desktop and for Smithery, with a settings form for API keys. Built by `npm run build:mcpb` and attached to every GitHub Release.
+- MCPB bundle (`opensdr-mcp.mcpb`): a self-contained build for one-click install in Claude Desktop and for Smithery, with a settings form for API keys. Built by `npm run build:mcpb` (plus a Smithery variant, `opensdr-mcp-smithery.mcpb`) and attached to every GitHub Release.
 - `glama.json` for the Glama listing.
 
 ### Fixed
