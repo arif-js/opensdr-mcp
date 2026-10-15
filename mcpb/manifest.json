@@ -1,0 +1,123 @@
+{
+  "manifest_version": "0.3",
+  "name": "opensdr-mcp",
+  "display_name": "OpenSDR",
+  "version": "1.0.0",
+  "description": "Open-source AI SDR: prospecting, email waterfall, buying signals, grounded outreach and safe campaign staging.",
+  "long_description": "OpenSDR gives your assistant the toolkit of a sales development rep, using your own API keys with no markup.\n\n- **Find prospects** that match your ideal customer profile (Apollo).\n- **Find and verify work emails** with a cost-aware waterfall: Apollo → Hunter → free local checks.\n- **Spot buying signals** (funding, hiring, leadership changes) with a source link for every one (Tavily or Exa).\n- **Draft grounded outreach**: every personalized line cites a sourced fact.\n- **Stage campaigns and CRM records** in Instantly and HubSpot, only after you approve a preview. Campaigns are created as drafts and never activated.\n\nEvery key is optional. With no keys, OpenSDR runs in demo mode on fictional data so you can try every tool first.",
+  "author": {
+    "name": "Arif",
+    "url": "https://github.com/arif-js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arif-js/opensdr-mcp.git"
+  },
+  "homepage": "https://github.com/arif-js/opensdr-mcp",
+  "documentation": "https://github.com/arif-js/opensdr-mcp/tree/main/docs",
+  "support": "https://github.com/arif-js/opensdr-mcp/issues",
+  "license": "MIT",
+  "keywords": ["sales", "sdr", "prospecting", "lead-generation", "email-finder", "apollo", "hunter", "instantly", "hubspot", "outbound"],
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.cjs",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.cjs"],
+      "env": {
+        "APOLLO_API_KEY": "${user_config.apollo_api_key}",
+        "HUNTER_API_KEY": "${user_config.hunter_api_key}",
+        "TAVILY_API_KEY": "${user_config.tavily_api_key}",
+        "EXA_API_KEY": "${user_config.exa_api_key}",
+        "INSTANTLY_API_KEY": "${user_config.instantly_api_key}",
+        "HUBSPOT_ACCESS_TOKEN": "${user_config.hubspot_access_token}",
+        "OPENSDR_READ_ONLY": "${user_config.read_only}",
+        "OPENSDR_MAX_CREDITS_PER_CALL": "${user_config.max_credits_per_call}"
+      }
+    }
+  },
+  "tools": [
+    { "name": "sdr_provider_status", "description": "Show mode, configured providers, limits and credits used" },
+    { "name": "sdr_lookup_filters", "description": "Look up normalized titles, seniorities, sizes and industries (free, local)" },
+    { "name": "sdr_search_people", "description": "Search people by title, seniority, company and location (Apollo)" },
+    { "name": "sdr_search_companies", "description": "Find accounts matching your ideal customer profile (Apollo)" },
+    { "name": "sdr_waterfall_enrich_person", "description": "Find and verify work emails: Apollo → Hunter → local checks" },
+    { "name": "sdr_enrich_company", "description": "Firmographics, tech stack and funding for a domain" },
+    { "name": "sdr_verify_email", "description": "Check email deliverability locally, optionally with Hunter" },
+    { "name": "sdr_save_prospects", "description": "Save people to local lists with dedupe and merge" },
+    { "name": "sdr_list_prospects", "description": "Query saved prospects and lists" },
+    { "name": "sdr_export_csv", "description": "Export a list to a spreadsheet-safe CSV" },
+    { "name": "sdr_manage_suppression", "description": "Do-not-contact list for emails and domains" },
+    { "name": "sdr_detect_buying_signals", "description": "Funding, hiring, leadership and launch signals with sources (Tavily/Exa)" },
+    { "name": "sdr_research_account", "description": "Gather cited sources about an account" },
+    { "name": "sdr_prepare_outreach_brief", "description": "Grounded brief, sequence framework and writing rules" },
+    { "name": "sdr_create_campaign", "description": "Create an Instantly campaign as a draft (preview + confirm)" },
+    { "name": "sdr_push_to_campaign", "description": "Enroll verified leads into a draft or paused campaign (preview + confirm)" },
+    { "name": "sdr_sync_hubspot", "description": "Upsert contacts into HubSpot (preview + confirm)" }
+  ],
+  "tools_generated": false,
+  "compatibility": {
+    "platforms": ["darwin", "linux"],
+    "runtimes": { "node": ">=22.12.0" }
+  },
+  "user_config": {
+    "apollo_api_key": {
+      "type": "string",
+      "title": "Apollo API key",
+      "description": "Optional. People/company search and enrichment. Some endpoints need an Apollo master key.",
+      "sensitive": true,
+      "required": false
+    },
+    "hunter_api_key": {
+      "type": "string",
+      "title": "Hunter API key",
+      "description": "Optional. Email finder and verifier.",
+      "sensitive": true,
+      "required": false
+    },
+    "tavily_api_key": {
+      "type": "string",
+      "title": "Tavily API key",
+      "description": "Optional. Buying signals and account research.",
+      "sensitive": true,
+      "required": false
+    },
+    "exa_api_key": {
+      "type": "string",
+      "title": "Exa API key",
+      "description": "Optional. Alternative to Tavily for signals and research.",
+      "sensitive": true,
+      "required": false
+    },
+    "instantly_api_key": {
+      "type": "string",
+      "title": "Instantly API key (v2)",
+      "description": "Optional. Draft campaigns and lead enrollment.",
+      "sensitive": true,
+      "required": false
+    },
+    "hubspot_access_token": {
+      "type": "string",
+      "title": "HubSpot private-app token",
+      "description": "Optional. Contact sync (contacts read/write scopes).",
+      "sensitive": true,
+      "required": false
+    },
+    "read_only": {
+      "type": "boolean",
+      "title": "Read-only mode",
+      "description": "Block every external write (campaigns, CRM).",
+      "default": false,
+      "required": false
+    },
+    "max_credits_per_call": {
+      "type": "number",
+      "title": "Max credits per call",
+      "description": "Hard cap on estimated paid provider credits per tool call.",
+      "default": 25,
+      "min": 1,
+      "max": 1000,
+      "required": false
+    }
+  }
+}

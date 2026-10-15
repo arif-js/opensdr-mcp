@@ -83,4 +83,15 @@ describe('loadConfig', () => {
     });
     expect(config.secrets).toEqual(['hunter-key-1234567890']);
   });
+
+  it('treats unfilled MCPB placeholders as unset', () => {
+    // What an MCP client passes when an optional bundle setting was left empty.
+    const placeholder = (key: string) => `\${user_config.${key}}`;
+    const config = loadConfig({
+      APOLLO_API_KEY: placeholder('apollo_api_key'),
+      OPENSDR_READ_ONLY: placeholder('read_only'),
+    });
+    expect(config.mode).toBe('demo');
+    expect(config.readOnly).toBe(false);
+  });
 });

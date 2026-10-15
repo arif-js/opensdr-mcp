@@ -6,6 +6,7 @@ import { linkClient } from '../helpers/mcp.js';
 const read = (file: string) => readFileSync(new URL(`../../${file}`, import.meta.url), 'utf8');
 const pkg = JSON.parse(read('package.json'));
 const server = JSON.parse(read('server.json'));
+const manifest = JSON.parse(read('mcpb/manifest.json'));
 
 function docsFiles(dir = 'docs'): string[] {
   return readdirSync(new URL(`../../${dir}`, import.meta.url), { withFileTypes: true }).flatMap(
@@ -54,6 +55,26 @@ describe('release metadata', () => {
     expect(server.packages[0].identifier).toBe(pkg.name);
     expect(server.packages[0].version).toBe(pkg.version);
     expect(server.description.length).toBeLessThanOrEqual(100);
+  });
+
+  it('the MCPB manifest matches the package and the registered tools', async () => {
+    expect(manifest.version).toBe(pkg.version);
+    expect(manifest.license).toBe(pkg.license);
+    const linked = await linkClient(testContext());
+    try {
+      const registered = (await linked.client.listTools()).tools.map((t) => t.name).sort();
+      expect(manifest.tools.map((t: { name: string }) => t.name).sort()).toEqual(registered);
+    } finally {
+      await linked.close();
+    }
+    const known = configEnvVars();
+    for (const variable of Object.keys(manifest.server.mcp_config.env)) {
+      expect(known).toContain(variable);
+    }
+    for (const value of Object.values(manifest.server.mcp_config.env) as string[]) {
+      const key = /^\$\{user_config\.([a-z_]+)\}$/.exec(value)?.[1];
+      expect(key && manifest.user_config[key], `${value} has no user_config entry`).toBeTruthy();
+    }
   });
 
   it('server.json only advertises env vars the config reads', () => {

@@ -6,7 +6,10 @@ OpenSDR is an MCP server: your AI assistant (Claude Desktop, Claude Code, Cursor
 
 ## 1. Add OpenSDR to your client
 
-### Claude Desktop
+### Claude Desktop: one-click bundle
+Download `opensdr-mcp.mcpb` from the [latest release](https://github.com/arif-js/opensdr-mcp/releases/latest) and double-click it (or drag it into Claude Desktop → Settings → Extensions). Claude Desktop shows a settings form where you can paste any API keys you have; leave them all empty to start in demo mode. No Node.js setup or config file editing needed.
+
+### Claude Desktop: config file
 Open Claude Desktop → **Settings → Developer → Edit Config**. This opens `claude_desktop_config.json` (macOS: `~/Library/Application Support/Claude/`, Windows: `%APPDATA%\Claude\`). Add:
 
 ```json

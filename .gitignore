@@ -27,3 +27,7 @@ Thumbs.db
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# MCPB bundle build output
+build/
+*.mcpb

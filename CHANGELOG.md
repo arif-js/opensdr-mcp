@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format is based on 
 
 ## [Unreleased]
 
+### Added
+- MCPB bundle (`opensdr-mcp.mcpb`): a self-contained build for one-click install in Claude Desktop and for Smithery, with a settings form for API keys. Built by `npm run build:mcpb` and attached to every GitHub Release.
+- `glama.json` for the Glama listing.
+
+### Fixed
+- Demo mode: enrichment now returns the same person the search found, demo names are unique, company names keep their casing, and results are labelled with the demo source.
+- Unfilled bundle placeholders such as `${user_config.apollo_api_key}` are treated as "not set" instead of as a key.
+
 ## [1.0.0] - 2026-10-15
 
 ### Added

@@ -76,7 +76,7 @@ Requires **Node.js 22.12+**.
 }
 ```
 
-Claude Code: `claude mcp add opensdr -- npx -y opensdr-mcp`. Cursor and other clients: see [getting started](docs/getting-started.md).
+Claude Code: `claude mcp add opensdr -- npx -y opensdr-mcp`. **One-click for Claude Desktop:** download `opensdr-mcp.mcpb` from the [latest release](https://github.com/arif-js/opensdr-mcp/releases/latest) and double-click it. Cursor and other clients: see [getting started](docs/getting-started.md).
 
 **2. Try it with no keys.** Restart your client and ask: *"Find VP Engineering leaders at fintech companies and draft outreach."* Or pick the built-in **autonomous_sdr_workflow** prompt.
 

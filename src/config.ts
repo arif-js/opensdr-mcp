@@ -84,7 +84,9 @@ function read(env: NodeJS.ProcessEnv, name: string): string | undefined {
   const value = env[name];
   if (value === undefined) return undefined;
   const trimmed = value.trim();
-  return trimmed === '' ? undefined : trimmed;
+  // An unfilled MCPB placeholder (e.g. "${user_config.apollo_api_key}") means "not set".
+  if (trimmed === '' || /^\$\{[^}]*\}$/.test(trimmed)) return undefined;
+  return trimmed;
 }
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {

@@ -17,7 +17,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write # attach the .mcpb bundle to the GitHub Release
       id-token: write # npm Trusted Publishing + MCP Registry GitHub OIDC login
     steps:
       - uses: actions/checkout@v4
@@ -69,3 +69,14 @@ jobs:
         run: |
           ./mcp-publisher login github-oidc
           ./mcp-publisher publish
+
+      - name: Build the MCPB bundle
+        run: npm run build:mcpb
+
+      - name: Attach the bundle to the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 \
+            || gh release create "$GITHUB_REF_NAME" --title "OpenSDR $GITHUB_REF_NAME" --notes "See CHANGELOG.md for details."
+          gh release upload "$GITHUB_REF_NAME" opensdr-mcp.mcpb --clobber
