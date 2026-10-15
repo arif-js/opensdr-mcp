@@ -10,6 +10,7 @@ Find prospects, verify their emails, spot buying signals, draft grounded outreac
 [![CI](https://github.com/arif-js/opensdr-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/arif-js/opensdr-mcp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-server-8A2BE2)](https://modelcontextprotocol.io)
+[![OpenSDR MCP server on Glama](https://glama.ai/mcp/servers/arif-js/opensdr-mcp/badges/score.svg)](https://glama.ai/mcp/servers/arif-js/opensdr-mcp)
 
 [Quick start](#quick-start) · [Demo](#see-it-in-action) · [How it works](#how-it-works) · [Docs](docs/README.md) · [Contributing](#contributing)
 
