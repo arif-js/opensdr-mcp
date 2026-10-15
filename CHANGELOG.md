@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format is based on 
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-16
+
 ### Added
 - MCPB bundle (`opensdr-mcp.mcpb`): a self-contained build for one-click install in Claude Desktop and for Smithery, with a settings form for API keys. Built by `npm run build:mcpb` (plus a Smithery variant, `opensdr-mcp-smithery.mcpb`) and attached to every GitHub Release.
 - `glama.json` for the Glama listing.
@@ -24,5 +26,6 @@ All notable changes to this project are documented here. The format is based on 
 - Safety: two-phase confirmation for every external write, payload fingerprinting between preview and confirm, draft-only campaigns, refusal to push into active campaigns, suppression list, read-only mode, per-call credit budget and enrichment cache.
 - Local JSON store with atomic writes, file locking and owner-only permissions; safe CSV export.
 
-[Unreleased]: https://github.com/arif-js/opensdr-mcp/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/arif-js/opensdr-mcp/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/arif-js/opensdr-mcp/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/arif-js/opensdr-mcp/releases/tag/v1.0.0

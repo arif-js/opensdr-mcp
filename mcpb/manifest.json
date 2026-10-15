@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "opensdr-mcp",
   "display_name": "OpenSDR",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Open-source AI SDR: prospecting, email waterfall, buying signals, grounded outreach and safe campaign staging.",
   "long_description": "OpenSDR gives your assistant the toolkit of a sales development rep, using your own API keys with no markup.\n\n- **Find prospects** that match your ideal customer profile (Apollo).\n- **Find and verify work emails** with a cost-aware waterfall: Apollo → Hunter → free local checks.\n- **Spot buying signals** (funding, hiring, leadership changes) with a source link for every one (Tavily or Exa).\n- **Draft grounded outreach**: every personalized line cites a sourced fact.\n- **Stage campaigns and CRM records** in Instantly and HubSpot, only after you approve a preview. Campaigns are created as drafts and never activated.\n\nEvery key is optional. With no keys, OpenSDR runs in demo mode on fictional data so you can try every tool first.",
   "author": {
@@ -17,13 +17,26 @@
   "documentation": "https://github.com/arif-js/opensdr-mcp/tree/main/docs",
   "support": "https://github.com/arif-js/opensdr-mcp/issues",
   "license": "MIT",
-  "keywords": ["sales", "sdr", "prospecting", "lead-generation", "email-finder", "apollo", "hunter", "instantly", "hubspot", "outbound"],
+  "keywords": [
+    "sales",
+    "sdr",
+    "prospecting",
+    "lead-generation",
+    "email-finder",
+    "apollo",
+    "hunter",
+    "instantly",
+    "hubspot",
+    "outbound"
+  ],
   "server": {
     "type": "node",
     "entry_point": "server/index.cjs",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/server/index.cjs"],
+      "args": [
+        "${__dirname}/server/index.cjs"
+      ],
       "env": {
         "APOLLO_API_KEY": "${user_config.apollo_api_key}",
         "HUNTER_API_KEY": "${user_config.hunter_api_key}",
@@ -37,28 +50,84 @@
     }
   },
   "tools": [
-    { "name": "sdr_provider_status", "description": "Show mode, configured providers, limits and credits used" },
-    { "name": "sdr_lookup_filters", "description": "Look up normalized titles, seniorities, sizes and industries (free, local)" },
-    { "name": "sdr_search_people", "description": "Search people by title, seniority, company and location (Apollo)" },
-    { "name": "sdr_search_companies", "description": "Find accounts matching your ideal customer profile (Apollo)" },
-    { "name": "sdr_waterfall_enrich_person", "description": "Find and verify work emails: Apollo → Hunter → local checks" },
-    { "name": "sdr_enrich_company", "description": "Firmographics, tech stack and funding for a domain" },
-    { "name": "sdr_verify_email", "description": "Check email deliverability locally, optionally with Hunter" },
-    { "name": "sdr_save_prospects", "description": "Save people to local lists with dedupe and merge" },
-    { "name": "sdr_list_prospects", "description": "Query saved prospects and lists" },
-    { "name": "sdr_export_csv", "description": "Export a list to a spreadsheet-safe CSV" },
-    { "name": "sdr_manage_suppression", "description": "Do-not-contact list for emails and domains" },
-    { "name": "sdr_detect_buying_signals", "description": "Funding, hiring, leadership and launch signals with sources (Tavily/Exa)" },
-    { "name": "sdr_research_account", "description": "Gather cited sources about an account" },
-    { "name": "sdr_prepare_outreach_brief", "description": "Grounded brief, sequence framework and writing rules" },
-    { "name": "sdr_create_campaign", "description": "Create an Instantly campaign as a draft (preview + confirm)" },
-    { "name": "sdr_push_to_campaign", "description": "Enroll verified leads into a draft or paused campaign (preview + confirm)" },
-    { "name": "sdr_sync_hubspot", "description": "Upsert contacts into HubSpot (preview + confirm)" }
+    {
+      "name": "sdr_provider_status",
+      "description": "Show mode, configured providers, limits and credits used"
+    },
+    {
+      "name": "sdr_lookup_filters",
+      "description": "Look up normalized titles, seniorities, sizes and industries (free, local)"
+    },
+    {
+      "name": "sdr_search_people",
+      "description": "Search people by title, seniority, company and location (Apollo)"
+    },
+    {
+      "name": "sdr_search_companies",
+      "description": "Find accounts matching your ideal customer profile (Apollo)"
+    },
+    {
+      "name": "sdr_waterfall_enrich_person",
+      "description": "Find and verify work emails: Apollo → Hunter → local checks"
+    },
+    {
+      "name": "sdr_enrich_company",
+      "description": "Firmographics, tech stack and funding for a domain"
+    },
+    {
+      "name": "sdr_verify_email",
+      "description": "Check email deliverability locally, optionally with Hunter"
+    },
+    {
+      "name": "sdr_save_prospects",
+      "description": "Save people to local lists with dedupe and merge"
+    },
+    {
+      "name": "sdr_list_prospects",
+      "description": "Query saved prospects and lists"
+    },
+    {
+      "name": "sdr_export_csv",
+      "description": "Export a list to a spreadsheet-safe CSV"
+    },
+    {
+      "name": "sdr_manage_suppression",
+      "description": "Do-not-contact list for emails and domains"
+    },
+    {
+      "name": "sdr_detect_buying_signals",
+      "description": "Funding, hiring, leadership and launch signals with sources (Tavily/Exa)"
+    },
+    {
+      "name": "sdr_research_account",
+      "description": "Gather cited sources about an account"
+    },
+    {
+      "name": "sdr_prepare_outreach_brief",
+      "description": "Grounded brief, sequence framework and writing rules"
+    },
+    {
+      "name": "sdr_create_campaign",
+      "description": "Create an Instantly campaign as a draft (preview + confirm)"
+    },
+    {
+      "name": "sdr_push_to_campaign",
+      "description": "Enroll verified leads into a draft or paused campaign (preview + confirm)"
+    },
+    {
+      "name": "sdr_sync_hubspot",
+      "description": "Upsert contacts into HubSpot (preview + confirm)"
+    }
   ],
   "tools_generated": false,
   "compatibility": {
-    "platforms": ["darwin", "linux"],
-    "runtimes": { "node": ">=22.12.0" }
+    "platforms": [
+      "darwin",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=22.12.0"
+    }
   },
   "user_config": {
     "apollo_api_key": {

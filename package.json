@@ -1,6 +1,6 @@
 {
   "name": "opensdr-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "mcpName": "io.github.arif-js/opensdr-mcp",
   "description": "Open-source, local-first MCP server that turns Claude into an AI SDR: prospecting, waterfall email enrichment, buying signals and outbound orchestration on your own API keys.",
   "type": "module",

@@ -77,6 +77,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Release notes = this version's section of CHANGELOG.md.
+          node -e '
+            const v = process.env.GITHUB_REF_NAME.replace(/^v/, "");
+            const text = require("fs").readFileSync("CHANGELOG.md", "utf8");
+            const start = text.indexOf(`## [${v}]`);
+            const body = start < 0 ? "" : text.slice(text.indexOf("\n", start) + 1).split(/\n## \[|\n\[Unreleased\]:/)[0];
+            const install = "**Install:** `npx -y opensdr-mcp` · one-click for Claude Desktop: download `opensdr-mcp.mcpb` below.\n\n";
+            require("fs").writeFileSync("release-notes.md", install + (body.trim() || "See CHANGELOG.md."));
+          '
           gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 \
-            || gh release create "$GITHUB_REF_NAME" --title "OpenSDR $GITHUB_REF_NAME" --notes "See CHANGELOG.md for details."
+            || gh release create "$GITHUB_REF_NAME" --title "OpenSDR $GITHUB_REF_NAME" --notes-file release-notes.md
           gh release upload "$GITHUB_REF_NAME" opensdr-mcp.mcpb --clobber
