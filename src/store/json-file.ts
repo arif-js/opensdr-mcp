@@ -32,6 +32,9 @@ export class JsonFile<T extends Versioned> {
   private readonly lockStaleMs: number;
   private readonly lockTimeoutMs: number;
   private readonly sleep: (ms: number) => Promise<void>;
+  private cachedValue: T | null = null;
+  private cachedMtimeMs = -1;
+  private cachedSize = -1;
 
   constructor(options: JsonFileOptions<T>) {
     this.options = options;
@@ -51,6 +54,9 @@ export class JsonFile<T extends Versioned> {
   }
 
   private async quarantine(): Promise<void> {
+    this.cachedValue = null;
+    this.cachedMtimeMs = -1;
+    this.cachedSize = -1;
     const target = `${this.options.path}.corrupt-${Date.now()}`;
     try {
       await fs.rename(this.options.path, target);
@@ -84,18 +90,34 @@ export class JsonFile<T extends Versioned> {
   }
 
   async read(): Promise<T> {
-    let text: string;
     try {
-      text = await fs.readFile(this.options.path, 'utf8');
+      const stat = await fs.stat(this.options.path);
+      if (
+        this.cachedValue !== null &&
+        stat.mtimeMs === this.cachedMtimeMs &&
+        stat.size === this.cachedSize
+      ) {
+        return this.cachedValue;
+      }
+      const text = await fs.readFile(this.options.path, 'utf8');
+      const parsed = await this.parse(text);
+      this.cachedValue = parsed;
+      this.cachedMtimeMs = stat.mtimeMs;
+      this.cachedSize = stat.size;
+      return parsed;
     } catch (error) {
-      if (isErrno(error, 'ENOENT')) return this.fresh();
+      if (isErrno(error, 'ENOENT')) {
+        this.cachedValue = null;
+        this.cachedMtimeMs = -1;
+        this.cachedSize = -1;
+        return this.fresh();
+      }
       throw new OpenSdrError({
         code: 'STORE_ERROR',
         message: `Failed to read ${this.options.path}: ${(error as Error).message}`,
         retryable: false,
       });
     }
-    return this.parse(text);
   }
 
   private async acquireLock(): Promise<() => Promise<void>> {
@@ -137,11 +159,35 @@ export class JsonFile<T extends Versioned> {
     }
   }
 
+  private async safeRename(src: string, dest: string): Promise<void> {
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      try {
+        await fs.rename(src, dest);
+        return;
+      } catch (error) {
+        if (
+          process.platform === 'win32' &&
+          (isErrno(error, 'EPERM') || isErrno(error, 'EBUSY') || isErrno(error, 'EACCES')) &&
+          attempt < 4
+        ) {
+          await this.sleep(20 * (attempt + 1));
+          continue;
+        }
+        throw error;
+      }
+    }
+  }
+
   private async writeAtomic(value: T): Promise<void> {
     const tmp = `${this.options.path}.tmp-${process.pid}-${tmpCounter++}`;
-    await fs.writeFile(tmp, JSON.stringify(value, null, 2), { mode: this.fileMode });
-    if (process.platform !== 'win32') await fs.chmod(tmp, this.fileMode);
-    await fs.rename(tmp, this.options.path);
+    try {
+      await fs.writeFile(tmp, JSON.stringify(value, null, 2), { mode: this.fileMode });
+      if (process.platform !== 'win32') await fs.chmod(tmp, this.fileMode);
+      await this.safeRename(tmp, this.options.path);
+    } catch (error) {
+      await fs.unlink(tmp).catch(() => undefined);
+      throw error;
+    }
   }
 
   async update(fn: (current: T) => T | Promise<T>): Promise<T> {
@@ -155,6 +201,10 @@ export class JsonFile<T extends Versioned> {
       const next = await fn(current);
       const payload = { ...next, schema_version: this.options.schemaVersion };
       await this.writeAtomic(payload);
+      this.cachedValue = payload;
+      const stat = await fs.stat(this.options.path).catch(() => undefined);
+      this.cachedMtimeMs = stat ? stat.mtimeMs : -1;
+      this.cachedSize = stat ? stat.size : -1;
       return payload;
     } finally {
       await release();

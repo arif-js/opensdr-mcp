@@ -54,6 +54,12 @@ describe('escapeCsvCell', () => {
     expect(escapeCsvCell('\tcmd')).toContain("'\tcmd");
   });
 
+  it('guards formulas with leading whitespace', () => {
+    expect(escapeCsvCell('  =1+1')).toBe("'  =1+1");
+    expect(escapeCsvCell('   @cmd')).toBe("'   @cmd");
+    expect(escapeCsvCell('   ')).toBe('   ');
+  });
+
   it('quotes and doubles embedded quotes', () => {
     expect(escapeCsvCell('a"b')).toBe('"a""b"');
   });

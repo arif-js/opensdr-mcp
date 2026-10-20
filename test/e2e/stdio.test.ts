@@ -101,6 +101,10 @@ class StdioClient {
     this.child.stdin?.write(`${JSON.stringify({ jsonrpc: '2.0', method, params })}\n`);
   }
 
+  get process(): ChildProcess {
+    return this.child;
+  }
+
   stop(): void {
     this.child.kill('SIGKILL');
   }
@@ -149,6 +153,25 @@ describe('STDIO e2e smoke test (demo mode)', () => {
       for (const line of client.lines) {
         expect((JSON.parse(line) as RpcMessage).jsonrpc).toBe('2.0');
       }
+    } finally {
+      client.stop();
+    }
+  });
+
+  it('shuts down cleanly on SIGTERM', async () => {
+    const client = new StdioClient();
+    try {
+      await client.request('initialize', {
+        protocolVersion: LATEST_PROTOCOL_VERSION,
+        capabilities: {},
+        clientInfo: { name: 'opensdr-e2e', version: '0.0.0' },
+      });
+      const exitPromise = new Promise<{ code: number | null }>((resolve) => {
+        client.process.on('exit', (code) => resolve({ code }));
+      });
+      client.process.kill('SIGTERM');
+      const exit = await exitPromise;
+      expect(exit.code).toBe(0);
     } finally {
       client.stop();
     }

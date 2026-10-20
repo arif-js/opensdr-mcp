@@ -194,6 +194,23 @@ describe('http client', () => {
     expect(attempts).toBe(1);
   });
 
+  it('rejects early based on content-length header', async () => {
+    const client = createHttpClient({
+      fetchImpl: async () =>
+        new Response('ok', {
+          headers: { 'content-length': '999999' },
+        }),
+      sleep: async () => undefined,
+      maxResponseBytes: 100,
+    });
+    await expect(
+      client.request({ provider: 'apollo', url: 'https://api.example.test/a' }),
+    ).rejects.toMatchObject({
+      code: 'PROVIDER_ERROR',
+      message: expect.stringContaining('exceeded the 100 byte cap'),
+    });
+  });
+
   it('rejects invalid JSON', async () => {
     const client = createHttpClient({
       fetchImpl: async () => new Response('not-json'),

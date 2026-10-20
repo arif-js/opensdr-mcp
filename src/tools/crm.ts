@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { createConfirmationEngine, fingerprint } from '../engine/confirmation.js';
+import { createConfirmationEngine, ExpiringMap, fingerprint } from '../engine/confirmation.js';
 import { OpenSdrError } from '../errors.js';
 import type { CrmContactInput, CrmProvider } from '../providers/types.js';
 import type { ServerContext } from '../server.js';
@@ -45,7 +45,7 @@ export function registerCrmTools(server: McpServer, ctx: ServerContext): void {
     warn: (message) => ctx.logger.warn(message),
   });
   // confirmation token → (prospect_id → fingerprint of the exact contact payload the user approved)
-  const previewContacts = new Map<string, Map<string, string>>();
+  const previewContacts = new ExpiringMap<string, Map<string, string>>();
 
   defineTool(server, {
     name: 'sdr_sync_hubspot',
@@ -177,6 +177,7 @@ export function registerCrmTools(server: McpServer, ctx: ServerContext): void {
         previewContacts.set(
           token,
           new Map(contacts.map((contact) => [contact.prospect_id, fingerprint(contact)])),
+          Date.parse(expires_at),
         );
         return okComplete(
           {
@@ -199,8 +200,7 @@ export function registerCrmTools(server: McpServer, ctx: ServerContext): void {
       }
 
       confirmation.verify('sdr_sync_hubspot', normalizeInput, input.confirmation_token);
-      const previewed = previewContacts.get(input.confirmation_token as string) ?? new Map();
-      previewContacts.delete(input.confirmation_token as string);
+      const previewed = previewContacts.take(input.confirmation_token as string) ?? new Map();
       const changed = contacts.filter(
         (contact) => previewed.get(contact.prospect_id) !== fingerprint(contact),
       );

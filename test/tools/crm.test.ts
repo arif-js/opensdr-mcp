@@ -267,4 +267,99 @@ describe('sdr_sync_hubspot (live, mocked HubSpot)', () => {
       await linked.close();
     }
   });
+
+  it('syncs note with first_line and signals when add_note is true', async () => {
+    const noteBodies: Record<string, unknown>[] = [];
+    const fetchImpl: FetchLike = async (url, init) => {
+      if (url.includes('/batch/read')) {
+        return new Response(JSON.stringify({ results: [] }), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        });
+      }
+      if (url.includes('/batch/upsert')) {
+        return new Response(JSON.stringify({ results: [{ id: 'hs_new_1', properties: {} }] }), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        });
+      }
+      if (url.includes('/objects/notes')) {
+        noteBodies.push(JSON.parse(String(init?.body)) as Record<string, unknown>);
+        return new Response(JSON.stringify({ id: 'note_123' }), {
+          status: 201,
+          headers: { 'content-type': 'application/json' },
+        });
+      }
+      throw new Error(`unexpected request: ${url}`);
+    };
+
+    const linked = await linkClient(
+      testContext({
+        config: testConfig({
+          HUBSPOT_ACCESS_TOKEN: 'hubspot-token-1234567890',
+          OPENSDR_DATA_DIR: tmpDir(),
+        }),
+        deps: {
+          http: createHttpClient({ fetchImpl, sleep: async () => undefined, random: () => 0 }),
+        },
+      }),
+    );
+    try {
+      const id = await save(linked.client, {
+        email: 'ada@acme.example',
+        first_name: 'Ada',
+      });
+      await linked.client.callTool({
+        name: 'sdr_save_prospects',
+        arguments: {
+          list: 'crm',
+          people: [
+            {
+              prospect_id: id,
+              patch: {
+                custom_fields: { first_line: 'Loved your post on SDR agents' },
+                signals: [
+                  {
+                    type: 'funding',
+                    title: 'Funding Round',
+                    url: 'https://news.example/funding',
+                    source: 'demo',
+                    published_at: new Date().toISOString(),
+                    confidence: 'high',
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      });
+
+      const preview = jsonOf<{ data: { confirmation_token: string } }>(
+        await linked.client.callTool({
+          name: 'sdr_sync_hubspot',
+          arguments: { prospect_ids: [id], add_note: true },
+        }),
+      );
+
+      const executed = jsonOf<{ data: { synced: number } }>(
+        await linked.client.callTool({
+          name: 'sdr_sync_hubspot',
+          arguments: {
+            prospect_ids: [id],
+            add_note: true,
+            confirm: true,
+            confirmation_token: preview.data.confirmation_token,
+          },
+        }),
+      );
+
+      expect(executed.data.synced).toBe(1);
+      expect(noteBodies).toHaveLength(1);
+      const notePayload = noteBodies[0] as { properties: { hs_note_body: string } };
+      expect(notePayload.properties.hs_note_body).toContain('Loved your post on SDR agents');
+      expect(notePayload.properties.hs_note_body).toContain('Funding Round');
+    } finally {
+      await linked.close();
+    }
+  });
 });

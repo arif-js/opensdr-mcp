@@ -103,3 +103,45 @@ export function createConfirmationEngine(options: ConfirmationOptions = {}): Con
     },
   };
 }
+
+/** In-memory cache for preview state with TTL-based pruning on write and read. */
+export class ExpiringMap<K, V> {
+  private readonly map = new Map<K, { expiresAt: number; data: V }>();
+  private readonly now: () => number;
+
+  constructor(now: () => number = () => Date.now()) {
+    this.now = now;
+  }
+
+  get size(): number {
+    return this.map.size;
+  }
+
+  set(key: K, data: V, expiresAt: number): void {
+    const current = this.now();
+    for (const [k, v] of this.map) {
+      if (current > v.expiresAt) this.map.delete(k);
+    }
+    this.map.set(key, { expiresAt, data });
+  }
+
+  get(key: K): V | undefined {
+    const entry = this.map.get(key);
+    if (!entry) return undefined;
+    if (this.now() > entry.expiresAt) {
+      this.map.delete(key);
+      return undefined;
+    }
+    return entry.data;
+  }
+
+  take(key: K): V | undefined {
+    const val = this.get(key);
+    this.map.delete(key);
+    return val;
+  }
+
+  delete(key: K): boolean {
+    return this.map.delete(key);
+  }
+}

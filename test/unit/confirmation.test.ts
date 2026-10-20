@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { canonicalJson, createConfirmationEngine } from '../../src/engine/confirmation.js';
+import {
+  canonicalJson,
+  createConfirmationEngine,
+  ExpiringMap,
+} from '../../src/engine/confirmation.js';
 
 describe('confirmation engine', () => {
   it('accepts a matching token once', () => {
@@ -60,5 +64,37 @@ describe('confirmation engine', () => {
 
   it('keeps array order', () => {
     expect(canonicalJson({ ids: ['a', 'b'] })).not.toBe(canonicalJson({ ids: ['b', 'a'] }));
+  });
+});
+
+describe('ExpiringMap', () => {
+  it('stores and takes values', () => {
+    const map = new ExpiringMap<string, string>();
+    map.set('k1', 'v1', Date.now() + 10000);
+    expect(map.size).toBe(1);
+    expect(map.get('k1')).toBe('v1');
+    expect(map.take('k1')).toBe('v1');
+    expect(map.get('k1')).toBeUndefined();
+    expect(map.size).toBe(0);
+  });
+
+  it('prunes expired entries on read and write', () => {
+    let now = 1000;
+    const map = new ExpiringMap<string, string>(() => now);
+    map.set('k1', 'v1', 1500);
+    map.set('k2', 'v2', 2500);
+    expect(map.size).toBe(2);
+
+    // Advance time past k1 expiry
+    now = 1600;
+    expect(map.get('k1')).toBeUndefined();
+    expect(map.size).toBe(1); // pruned on get
+
+    // Advance time and add k3, which prunes k2
+    now = 2600;
+    map.set('k3', 'v3', 3500);
+    expect(map.size).toBe(1);
+    expect(map.get('k2')).toBeUndefined();
+    expect(map.get('k3')).toBe('v3');
   });
 });

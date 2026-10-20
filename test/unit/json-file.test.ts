@@ -116,4 +116,30 @@ describe('JsonFile', () => {
     await fs.mkdir(`${file.filePath}.lock`);
     await expect(file.update((current) => current)).rejects.toMatchObject({ code: 'STORE_ERROR' });
   });
+
+  it('cleans up tmp files if writeAtomic fails', async () => {
+    const file = counterFile('fail.json');
+    // Force write failure by making dataDir a read-only file or invalid
+    await fs.mkdir(dataDir, { recursive: true });
+    // Write once successfully
+    await file.update((current) => ({ ...current, count: 1 }));
+    // Attempt to write an un-stringifiable value (e.g. BigInt)
+    await expect(
+      file.update((current) => ({
+        ...current,
+        // @ts-expect-error intentionally invalid JSON
+        count: 10n,
+      })),
+    ).rejects.toThrow();
+    const files = await fs.readdir(dataDir);
+    expect(files.filter((f) => f.includes('.tmp-'))).toHaveLength(0);
+  });
+
+  it('uses mtime cache on repeated reads', async () => {
+    const file = counterFile('cached.json');
+    await file.update((current) => ({ ...current, count: 5 }));
+    const first = await file.read();
+    const second = await file.read();
+    expect(first).toBe(second); // same object reference from cache
+  });
 });

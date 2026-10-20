@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { createConfirmationEngine, fingerprint } from '../engine/confirmation.js';
+import { createConfirmationEngine, ExpiringMap, fingerprint } from '../engine/confirmation.js';
 import { OpenSdrError } from '../errors.js';
 import { SAFE_PUSH_STATUSES } from '../providers/instantly.js';
 import type { CampaignRef, CampaignSender, CampaignSpec, LeadInput } from '../providers/types.js';
@@ -104,7 +104,7 @@ export function registerEngageTools(server: McpServer, ctx: ServerContext): void
     warn: (message) => ctx.logger.warn(message),
   });
   // confirmation token → (prospect_id → fingerprint of the exact lead payload the user approved)
-  const previewEligible = new Map<string, Map<string, string>>();
+  const previewEligible = new ExpiringMap<string, Map<string, string>>();
 
   defineTool(server, {
     name: 'sdr_prepare_outreach_brief',
@@ -413,6 +413,7 @@ export function registerEngageTools(server: McpServer, ctx: ServerContext): void
         previewEligible.set(
           token,
           new Map(gates.eligible.map((entry) => [entry.prospect_id, fingerprint(entry)])),
+          Date.parse(expires_at),
         );
         return okComplete(
           {
@@ -428,8 +429,7 @@ export function registerEngageTools(server: McpServer, ctx: ServerContext): void
       }
 
       confirmation.verify('sdr_push_to_campaign', normalizeInput, input.confirmation_token);
-      const previewed = previewEligible.get(input.confirmation_token as string) ?? new Map();
-      previewEligible.delete(input.confirmation_token as string);
+      const previewed = previewEligible.take(input.confirmation_token as string) ?? new Map();
 
       const changed = gates.eligible.filter(
         (entry) => previewed.get(entry.prospect_id) !== fingerprint(entry),

@@ -1,4 +1,4 @@
-const FORMULA_PREFIX = /^[=+\-@\t\r]/;
+const FORMULA_PREFIX = /^[ ]*[=+\-@\t\r]/;
 
 export function escapeCsvCell(value: unknown): string {
   if (value === null || value === undefined) return '';

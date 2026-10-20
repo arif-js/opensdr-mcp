@@ -114,6 +114,57 @@ export function createHttpClient(options: HttpClientOptions = {}): HttpClient {
     Math.min(30000, 500 * 2 ** attempt) + Math.floor(random() * 250);
 
   const readBody = async (response: Response, provider: string): Promise<string> => {
+    const contentLength = response.headers.get('content-length');
+    if (contentLength) {
+      const parsedLength = Number(contentLength);
+      if (Number.isFinite(parsedLength) && parsedLength > maxResponseBytes) {
+        throw new OpenSdrError({
+          code: 'PROVIDER_ERROR',
+          message: `${provider} response exceeded the ${maxResponseBytes} byte cap.`,
+          provider,
+          retryable: false,
+        });
+      }
+    }
+
+    if (response.body && typeof response.body.getReader === 'function') {
+      const reader = response.body.getReader();
+      const chunks: Uint8Array[] = [];
+      let totalBytes = 0;
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          if (value) {
+            totalBytes += value.byteLength;
+            if (totalBytes > maxResponseBytes) {
+              await reader.cancel().catch(() => undefined);
+              throw new OpenSdrError({
+                code: 'PROVIDER_ERROR',
+                message: `${provider} response exceeded the ${maxResponseBytes} byte cap.`,
+                provider,
+                retryable: false,
+              });
+            }
+            chunks.push(value);
+          }
+        }
+      } finally {
+        try {
+          reader.releaseLock();
+        } catch {
+          // best effort
+        }
+      }
+      const combined = new Uint8Array(totalBytes);
+      let offset = 0;
+      for (const chunk of chunks) {
+        combined.set(chunk, offset);
+        offset += chunk.byteLength;
+      }
+      return new TextDecoder().decode(combined);
+    }
+
     const buffer = await response.arrayBuffer();
     if (buffer.byteLength > maxResponseBytes) {
       throw new OpenSdrError({
